@@ -49,6 +49,18 @@ router.post("/", async (req, res, next) => {
 
 router.put("/:id", async (req, res, next) => {
   try {
+    const payload = {
+      name: req.body.name,
+      budget: req.body.budget,
+    };
+
+    await db("accounts").update(payload).where("id", req.params.id);
+    const accounts = await db
+      .first("*")
+      .from("accounts")
+      .where("id", req.params.id);
+
+    res.json(accounts);
   } catch (err) {
     next(err);
   }
