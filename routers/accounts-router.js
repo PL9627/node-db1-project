@@ -68,6 +68,9 @@ router.put("/:id", async (req, res, next) => {
 
 router.delete("/:id", async (req, res, next) => {
   try {
+    await db("accounts").where("id", req.params.id).del();
+
+    res.status(204).end();
   } catch (err) {
     next(err);
   }
